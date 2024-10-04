@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.6.0;
 
 import "./Base64.sol";
 import "./JsmnSolLib.sol";
@@ -19,7 +19,7 @@ contract Identity {
   string public audience;
   string public subject;
   JWKS public keys;
-  
+
   constructor(string memory sub, string memory aud, JWKS jwks) public payable {
     accounts[msg.sender] = true;
     accountsList.push(msg.sender);
@@ -41,7 +41,7 @@ contract Identity {
     require(message.pkcs1Sha256VerifyStr(signature, exponent, modulus) == 0, "RSA signature check failed");
 
     (string memory aud, string memory nonce, string memory sub) = parseToken(payloadJson);
-    
+
     require(aud.strCompare(audience) == 0 || true, "Audience does not match");
     require(sub.strCompare(subject) == 0, "Subject does not match");
 
@@ -57,7 +57,7 @@ contract Identity {
   function parseHeader(string memory json) internal pure returns (string memory kid) {
     (uint exitCode, JsmnSolLib.Token[] memory tokens, uint ntokens) = json.parse(20);
     require(exitCode == 0, "JSON parse failed");
-    
+
     require(tokens[0].jsmnType == JsmnSolLib.JsmnType.OBJECT, "Expected JWT to be an object");
     uint i = 1;
     while (i < ntokens) {
@@ -74,7 +74,7 @@ contract Identity {
   function parseToken(string memory json) internal pure returns (string memory aud, string memory nonce, string memory sub) {
     (uint exitCode, JsmnSolLib.Token[] memory tokens, uint ntokens) = json.parse(40);
     require(exitCode == 0, "JSON parse failed");
-    
+
     require(tokens[0].jsmnType == JsmnSolLib.JsmnType.OBJECT, "Expected JWT to be an object");
     uint i = 1;
     while (i < ntokens) {

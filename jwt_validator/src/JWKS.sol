@@ -1,8 +1,8 @@
-pragma solidity ^0.5;
+pragma solidity ^0.6.0;
 
 contract JWKS {
   address admin;
-  
+
   mapping(string => bytes) keys;
 
   constructor() public {
