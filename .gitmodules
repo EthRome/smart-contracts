@@ -1,0 +1,3 @@
+[submodule "jwt_validator/lib/forge-std"]
+	path = jwt_validator/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
