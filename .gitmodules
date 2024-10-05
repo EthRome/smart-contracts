@@ -18,7 +18,7 @@
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable
 [submodule "account-factory/lib/account-abstraction"]
 	path = account-factory/lib/account-abstraction
-	url = https://github.com/EthRome/account-abstraction
+	url = https://github.com/eth-infinitism/account-abstraction
 [submodule "payment-handler/lib/forge-std"]
 	path = payment-handler/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
