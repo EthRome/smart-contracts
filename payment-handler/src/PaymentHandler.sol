@@ -19,9 +19,10 @@ contract PaymentHandler {
         accountFactory = _accountFactory;
     }
 
-    function requestTransfer(uint256 value) public {
-        codeToValue[codeNonce] = CodeValue(msg.sender, value);
+    function requestTransfer(uint256 value) public returns (uint256) {
         codeNonce++;
+        codeToValue[codeNonce] = CodeValue(msg.sender, value);
+        return codeNonce;
     }
 
     function readCodeToValue(uint256 code) public view returns (uint256) {
