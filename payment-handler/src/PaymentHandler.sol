@@ -35,7 +35,8 @@ contract PaymentHandler {
         if (value > msg.value) {
             revert("Insufficient value");
         }
-        codeValue.to.call{value: value}("");
+        (bool sent, bytes memory _data) = codeValue.to.call{value: value}("");
+        require(sent, "Failed to send Ether");
     }
 
     function forwardSend(address payable to, bytes32 toEmailHash) payable public {
