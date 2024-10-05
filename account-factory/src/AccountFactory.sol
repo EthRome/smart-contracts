@@ -11,9 +11,10 @@ import "@openzeppelin/contracts/utils/Create2.sol";
  * The factory's createAccount returns the target account address even if it is already installed.
  * This way, the entryPoint.getSenderAddress() can be called either before or after the account is created.
  */
-contract SimpleAccountFactory {
+contract AccountFactory {
     SimpleAccount public immutable accountImplementation;
 
+    //keccak256(owner, salt) => uint256
     mapping(bytes32 => uint256) internal ethBalance;
 
     constructor(IEntryPoint _entryPoint) {
@@ -42,6 +43,7 @@ contract SimpleAccountFactory {
 
     /**
      * calculate the counterfactual address of this account as it would be returned by createAccount()
+     * @param salt - hash of the target user email
      */
     function getAddress(address owner,uint256 salt) public view returns (address) {
         return Create2.computeAddress(bytes32(salt), keccak256(abi.encodePacked(
