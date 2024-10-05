@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.23;
+pragma solidity 0.8.23;
 
 import {IEntryPoint} from "../lib/account-abstraction/contracts/interfaces/IEntryPoint.sol";
 import {SimpleAccount} from "../lib/account-abstraction/contracts/samples/SimpleAccount.sol";

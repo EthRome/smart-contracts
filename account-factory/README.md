@@ -51,6 +51,10 @@ $ anvil
 $ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
 ```
 
+```shell
+forge script --rpc-url https://rpc-amoy.polygon.technology/ --chain polygon-amoy script/AccountFactory.s.sol -vvvv --private-key <<PRIVKEY>> --broadcast
+```
+
 ### Cast
 
 ```shell
