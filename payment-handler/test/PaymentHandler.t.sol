@@ -17,12 +17,10 @@ contract PaymentHandlerTest is Test {
 
     function test_basic_send() public {
         address targetAddress = alice;
-        address factoryOwner = address(0);
         bytes32 hashedEmail = keccak256("test.email@domain.com");
         paymentHandler.forwardSend(
             uint256(1),
             payable(targetAddress),
-            factoryOwner,
             hashedEmail
         );
 
