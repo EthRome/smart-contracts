@@ -10,7 +10,7 @@ contract CounterScript is Script {
 
     function run() public {
         vm.startBroadcast();
-        address accountFactoryAddress = vm.envAddress("ACCOUNT_FACTORY_ADDRESS");
+        address payable accountFactoryAddress = payable(vm.envAddress("ACCOUNT_FACTORY_ADDRESS"));
         PaymentHandler ph = new PaymentHandler(AccountFactory(accountFactoryAddress));
         vm.stopBroadcast();
     }

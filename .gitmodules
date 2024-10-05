@@ -34,3 +34,6 @@
 [submodule "account-factory/lib/light-account"]
 	path = account-factory/lib/light-account
 	url = https://github.com/alchemyplatform/light-account
+[submodule "payment-handler/lib/account-abstraction"]
+	path = payment-handler/lib/account-abstraction
+	url = https://github.com/eth-infinitism/account-abstraction
