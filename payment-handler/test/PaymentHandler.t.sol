@@ -9,9 +9,10 @@ import {PaymentHandler} from "../src/PaymentHandler.sol";
 contract PaymentHandlerTest is Test {
     PaymentHandler public paymentHandler;
     address private alice = makeAddr("alice");
+    address private bob = makeAddr("bob");
 
     function setUp() public {
-        AccountFactory accountFactory = new AccountFactory(address(0),IEntryPoint(address(0)));
+        AccountFactory accountFactory = new AccountFactory(address(1),IEntryPoint(address(alice)));
         paymentHandler = new PaymentHandler(accountFactory);
     }
 
@@ -22,7 +23,33 @@ contract PaymentHandlerTest is Test {
             payable(targetAddress),
             hashedEmail
         );
+    }
 
+    function testRequestTransfer() public {
+        uint256 code = paymentHandler.requestTransfer(1);
+        assertEq(code, 435232);
+    }
+
+    function testReadCodeToValue() public {
+        uint256 code = paymentHandler.requestTransfer(1);
+        uint256 value = paymentHandler.readCodeToValue(code);
+        assertEq(value, 1);
+    }
+
+    function testFulfillCode() public {
+        vm.startPrank(bob);
+        uint256 code = paymentHandler.requestTransfer(1);
+        vm.deal(alice, 1);
+        uint256 aliceBalanceBeforeSend = alice.balance;
+        uint256 bobBalanceBeforeSend = bob.balance;
+        vm.startPrank(alice);
+        paymentHandler.fulfillCode{value: 1}(code);
+
+        assertEq(bobBalanceBeforeSend, 0);
+        assertEq(aliceBalanceBeforeSend, 1);
+
+        assertEq(bob.balance, 1);
+        assertEq(alice.balance, 0);
     }
 
 }
