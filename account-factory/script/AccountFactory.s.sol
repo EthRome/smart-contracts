@@ -10,7 +10,8 @@ contract CounterScript is Script {
 
     function run() public {
         vm.startBroadcast();
-        new AccountFactory(IEntryPoint(address(0)));
+        address entryPoint = vm.envAddress("ENTRY_POINT_CONTRACT_ADDRESS");
+        new AccountFactory(IEntryPoint(entryPoint));
         vm.stopBroadcast();
     }
 }
