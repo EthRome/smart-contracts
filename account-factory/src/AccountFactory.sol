@@ -29,7 +29,7 @@ contract AccountFactory is BaseLightAccountFactory {
     /// @return account The address of either the newly deployed account or an existing account with this owner and salt.
     function createAccount(address owner, uint256 salt) external returns (LightAccount account) {
         (bool alreadyDeployed, address accountAddress) =
-                            LibClone.createDeterministicERC1967(address(ACCOUNT_IMPLEMENTATION), _getCombinedSalt(owner, salt));
+                            LibClone.createDeterministicERC1967(address(ACCOUNT_IMPLEMENTATION), _getCombinedSalt(address(0), salt));
 
         account = LightAccount(payable(accountAddress));
 
@@ -44,7 +44,7 @@ contract AccountFactory is BaseLightAccountFactory {
     /// @return The address of the account that would be created with `createAccount`.
     function getAddress(address owner, uint256 salt) external view returns (address) {
         return LibClone.predictDeterministicAddressERC1967(
-            address(ACCOUNT_IMPLEMENTATION), _getCombinedSalt(owner, salt), address(this)
+            address(ACCOUNT_IMPLEMENTATION), _getCombinedSalt(address(0), salt), address(this)
         );
     }
 
@@ -55,8 +55,9 @@ contract AccountFactory is BaseLightAccountFactory {
     /// @return combinedSalt The hash of the owner and salt.
     function _getCombinedSalt(address owner, uint256 salt) internal pure returns (bytes32 combinedSalt) {
         // Compute the hash of the owner and salt in scratch space memory.
+        address mockedAddress = address(0);
         assembly ("memory-safe") {
-            mstore(0x00, owner)
+            mstore(0x00, mockedAddress)
             mstore(0x20, salt)
             combinedSalt := keccak256(0x00, 0x40)
         }

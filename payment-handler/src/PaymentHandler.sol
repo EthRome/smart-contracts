@@ -12,20 +12,19 @@ contract PaymentHandler {
         accountFactory = _accountFactory;
     }
 
-    function forwardSend(uint256 ethValue, address payable to, bytes32 toEmailHash) public {
+    function forwardSend(address payable to, bytes32 toEmailHash) payable public {
         if (to != address(0)) {
-            (bool sent, bytes memory _data) = to.call{value: ethValue}("");
+            (bool sent, bytes memory _data) = to.call{value: msg.value}("");
+            require(sent, "Failed to send Ether");
+        }else{
+            require(to == address(0) && uint256(toEmailHash) != 0);
+
+            //Calculate deterministic address
+            address contractAddress = accountFactory.getAddress(mockedOwner, uint256(toEmailHash));
+            //Send ether
+            (bool sent, bytes memory _data) = contractAddress.call{value: msg.value}("");
             require(sent, "Failed to send Ether");
         }
-
-        require(to == address(0) && uint256(toEmailHash) != 0);
-
-        //Calculate deterministic address
-        address contractAddress = accountFactory.getAddress(mockedOwner, uint256(toEmailHash));
-        //Send ether
-        (bool sent, bytes memory _data) = contractAddress.call{value: ethValue}("");
-        require(sent, "Failed to send Ether");
-
     }
 
 }
