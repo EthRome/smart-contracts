@@ -31,3 +31,6 @@
 [submodule "payment-handler/lib/smart-contracts"]
 	path = payment-handler/lib/smart-contracts
 	url = https://github.com/EthRome/smart-contracts
+[submodule "account-factory/lib/light-account"]
+	path = account-factory/lib/light-account
+	url = https://github.com/alchemyplatform/light-account
