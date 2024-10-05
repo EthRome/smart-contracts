@@ -28,3 +28,6 @@
 [submodule "payment-handler/lib/openzeppelin-contracts-upgradeable"]
 	path = payment-handler/lib/openzeppelin-contracts-upgradeable
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable
+[submodule "payment-handler/lib/smart-contracts"]
+	path = payment-handler/lib/smart-contracts
+	url = https://github.com/EthRome/smart-contracts
