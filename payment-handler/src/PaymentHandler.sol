@@ -24,7 +24,7 @@ contract PaymentHandler {
     function requestTransfer(uint256 value) public returns (uint256) {
         codeNonce++;
         codeToValue[codeNonce] = CodeValue(msg.sender, value);
-        emit CodeValueEvent(msg.sender, value);
+        emit CodeValueEvent(msg.sender, codeNonce);
         return codeNonce;
     }
 
