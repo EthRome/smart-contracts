@@ -8,6 +8,8 @@ struct CodeValue {
     uint256 value;
 }
 
+event CodeValueEvent(address indexed to, uint256 indexed value);
+
 contract PaymentHandler {
     AccountFactory public accountFactory;
 
@@ -22,6 +24,7 @@ contract PaymentHandler {
     function requestTransfer(uint256 value) public returns (uint256) {
         codeNonce++;
         codeToValue[codeNonce] = CodeValue(msg.sender, value);
+        emit CodeValueEvent(msg.sender, value);
         return codeNonce;
     }
 
